@@ -1,11 +1,11 @@
 import random
 import os
-import sys
-
+import subprocess
 
 HostnamePath = "/etc/hostname";
 
 def ReWriteHostname():
+    #Write a random float to the host name file
     w=open(HostnamePath, "w")
     if w.mode == "w":
         w.write(str(random.random()));
@@ -14,6 +14,7 @@ def ReWriteHostname():
 
 
 def FindHostname():
+    #Try to find the hostname file NOTE: it does not have a type like .txt
     f = open(HostnamePath, "r")
     if f.mode == 'r':
         contents = f.read()
@@ -23,5 +24,28 @@ def FindHostname():
             ReWriteHostname();
 
 
+def WriteNewMACaddress():
+    print("Starting with the MAC address...")
+    os.system("ifconfig eth0 down")
+    os.system("ifconfig eth0 hw ether 00:80:48:BA:d1:30")
+    os.system("ifconfig eth0 up")
+    os.system("ifconfig eth0 |grep HWaddr")
+
+    print("MAC address changed")
+
+
+
+##########################
+#We Start here and go down.
+##########################
 print("Start up...")
-FindHostname()
+print("Getting root privilages...")
+
+#Get user root id
+euid = os.geteuid()
+if euid != 0:
+    print("Error with root...Exiting")
+    exit()
+
+FindHostname();
+WriteNewMACaddress();
