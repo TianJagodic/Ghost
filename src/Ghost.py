@@ -8,7 +8,10 @@ def ReWriteHostname():
     #Write a random float to the host name file
     w=open(HostnamePath, "w")
     if w.mode == "w":
-        w.write(str(random.random()));
+        newName = str(random.random());
+        newName = newName[1:];
+        newName = newName[1:];
+        w.write(str(newName));
         print("Hostname rewriten succsesfuly")
 
 
@@ -41,11 +44,12 @@ def WriteNewMACaddress():
 print("Start up...")
 print("Getting root privilages...")
 
+
 #Get user root id
 euid = os.geteuid()
 if euid != 0:
     print("Error with root...Exiting")
-    exit()
+    exit();
 
 FindHostname();
 WriteNewMACaddress();
