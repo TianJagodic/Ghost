@@ -51,5 +51,6 @@ if euid != 0:
     print("Error with root...Exiting")
     exit();
 
+
 FindHostname();
 WriteNewMACaddress();
