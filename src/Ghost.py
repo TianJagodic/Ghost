@@ -36,10 +36,10 @@ def FindHostname():
 
 def WriteNewMACaddress():
     print("Starting with the MAC address...")
-    os.system("ifconfig eth0 down")
-    os.system("ifconfig eth0 hw ether " + GenerateNewRandomMAC() + "")
-    os.system("ifconfig eth0 up")
-    os.system("ifconfig eth0 |grep HWaddr")
+    os.system("sudo apt-get install macchanger")
+    os.system("sudo ifconfig wlp1s0 down")
+    os.system("sudo macchanger -m "+ GenerateNewRandomMAC() +" wlp1s0")
+    os.system("sudo ifconfig wlp1s0 up")
 
     print("MAC address changed")
 
