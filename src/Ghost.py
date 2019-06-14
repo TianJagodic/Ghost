@@ -19,8 +19,10 @@ def ReWriteHostname():
         print("Hostname rewriten succsesfuly")
 
 
-#TODO: Make the hostname file non root chmod 777 /etc/hostname
 def FindHostname():
+
+    os.system("chmod 777 /etc/hostname")
+
     #Try to find the hostname file NOTE: it does not have a type like .txt
     f = open(HostnamePath, "r")
     if f.mode == 'r':
