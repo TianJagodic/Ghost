@@ -19,7 +19,7 @@ def ReWriteHostname():
         print("Hostname rewriten succsesfuly")
 
 
-
+#TODO: Make the hostname file non root chmod 777 /etc/hostname
 def FindHostname():
     #Try to find the hostname file NOTE: it does not have a type like .txt
     f = open(HostnamePath, "r")
@@ -155,6 +155,9 @@ if euid != 0:
 
 FindHostname();
 WriteNewMACaddress();
+
+#TODO: Generate a random IP form the list below
+#TODO: Assing the ip
 
 if __name__ == '__main__':
 
