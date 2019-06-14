@@ -139,6 +139,9 @@ def map_network(pool_size=255):
 
 ############################################################
 
+def ChangeIp():
+
+
 
 
 ##########################
@@ -154,6 +157,11 @@ if euid != 0:
     print("Error with root...Exiting")
     exit();
 
+if __name__ == '__main__':
+
+    print('Mapping...')
+    lst = map_network()
+    print(lst)
 
 FindHostname();
 WriteNewMACaddress();
@@ -161,11 +169,7 @@ WriteNewMACaddress();
 #TODO: Generate a random IP form the list below
 #TODO: Assing the ip
 
-if __name__ == '__main__':
 
-    print('Mapping...')
-    lst = map_network()
-    print(lst)
 
 
 
