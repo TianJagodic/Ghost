@@ -1,5 +1,6 @@
 import random
 import os
+import string
 import subprocess
 
 HostnamePath = "/etc/hostname";
@@ -30,11 +31,30 @@ def FindHostname():
 def WriteNewMACaddress():
     print("Starting with the MAC address...")
     os.system("ifconfig eth0 down")
-    os.system("ifconfig eth0 hw ether 00:80:48:BA:d1:30")
+    os.system("ifconfig eth0 hw ether " + GenerateNewRandomMAC() + "")
     os.system("ifconfig eth0 up")
     os.system("ifconfig eth0 |grep HWaddr")
 
     print("MAC address changed")
+
+def GenerateNewRandomMAC():
+    print("Generating random MAC address")
+
+    newMAC = "";
+
+
+    smallletters = string.ascii_lowercase
+    bigletters = string.ascii_uppercase
+
+    for x in range(6):
+        newMAC = newMAC + ":";
+        for y in range(2):
+            newMAC = newMAC + str(random.randint(1,9));
+
+    newMAC = newMAC[1:];
+    return newMAC;
+
+    #random.choice(smallletters)
 
 
 
