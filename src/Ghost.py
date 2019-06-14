@@ -28,6 +28,7 @@ def FindHostname():
             ReWriteHostname();
 
 
+
 def WriteNewMACaddress():
     print("Starting with the MAC address...")
     os.system("ifconfig eth0 down")
