@@ -4,6 +4,8 @@ import string
 import subprocess
 import socket
 import multiprocessing
+from uuid import getnode as get_mac
+
 
 
 HostnamePath = "/etc/hostname";
@@ -35,13 +37,19 @@ def FindHostname():
 
 
 def WriteNewMACaddress():
+    mac = get_mac()
     print("Starting with the MAC address...")
     os.system("sudo apt-get install macchanger")
-    os.system("sudo ifconfig wlp1s0 down")
     os.system("sudo macchanger -m "+ GenerateNewRandomMAC() +" wlp1s0")
-    os.system("sudo ifconfig wlp1s0 up")
 
-    print("MAC address changed")
+    newMAC = get_mac();
+
+    if(mac == get_mac()):
+        print("MAC address changed")
+    else:
+        print("Error MAC not changed");
+
+    os.system("ifconfig")
 
 def GenerateNewRandomMAC():
     print("Generating random MAC address")
@@ -210,7 +218,45 @@ def GetNewIp():
     newIP = random.randint(3, 240);
     return newIP;
 
+def AssignNewIP():
+    os.system("sudo ifconfig wlp1s0 " + GenerateNewIp() + " netmask "+ MakeNetMask() +"")
 
+def MakeNetMask():
+    ip0 = lst[0];
+    ip1 = lst[1];
+
+    ipA0 = ip0.split(".");
+    ipA1 = ip1.split(".");
+
+    print(ipA0);
+    print(ipA1);
+
+    mask_number = 0;
+
+    if (ipA1[0] == ipA0[0]):
+        mask_number += 8;
+
+    if (ipA1[1] == ipA0[1]):
+        mask_number += 8;
+
+    if (ipA1[2] == ipA0[2]):
+        mask_number += 8;
+
+    if (ipA1[3] == ipA0[3]):
+        mask_number += 8;
+
+
+    netmask = "";
+
+    if(mask_number == 8):
+        netmask = "255.0.0.0";
+    elif(mask_number == 16):
+        netmask = "255.255.0.0";
+    elif (mask_number == 24):
+        netmask = "255.255.255.0";
+
+
+    return netmask;
 
 
 ##########################
@@ -232,15 +278,14 @@ if __name__ == '__main__':
     lst = map_network()
     print(lst)
 
+os.system("sudo ifconfig wlp1s0 down")
 FindHostname();
 WriteNewMACaddress();
+AssignNewIP();
 
-#TODO: Generate a random IP form the list below
-#TODO: Assing the ip
-
-
-
-
+os.system("sudo ifconfig wlp1s0 up")
+os.system("sudo ifconfig wlp1s0 down")
+os.system("sudo ifconfig wlp1s0 up")
 
 
 
