@@ -139,7 +139,76 @@ def map_network(pool_size=255):
 
 ############################################################
 
-def ChangeIp():
+#def ChangeIp():
+
+def GhatherIPData():
+    ip0 = lst[0];
+    ip1 = lst[1];
+
+    ipA0 = ip0.split(".");
+    ipA1 = ip1.split(".");
+
+    print(ipA0);
+    print(ipA1);
+
+    mask_number = 0;
+
+    if(ipA1[0] == ipA0[0]):
+        mask_number += 8;
+        print(ipA1[0])
+        print("Network mask = 8 bit")
+
+    if(ipA1[1] == ipA0[1]):
+        mask_number += 8;
+        print(ipA1[1])
+        print("Network mask = 16 bit")
+
+    if(ipA1[2] == ipA0[2]):
+        mask_number += 8;
+        print(ipA1[2])
+        print("Network mask = 24 bit")
+
+    if(ipA1[3] == ipA0[3]):
+        mask_number += 8;
+        print(ipA1[3])
+        print("Network mask = 32 bit")
+
+
+    print("Final network mask is: " + str(mask_number) + " Bit");
+
+
+
+def MakeTakenIpsList( listOfIps):
+    takenNummbers = [];
+
+    for Ips in listOfIps:
+        currentIp = Ips.split(".");
+        takenNummbers.append(currentIp[3]);
+
+    print("IPs taken: " + str(takenNummbers));
+    return takenNummbers;
+
+def GenerateNewIp():
+    takenIPs = MakeTakenIpsList(lst);
+
+    newIP = GetNewIp();
+
+    for x in takenIPs:
+        if(newIP == x):
+            newIP = GetNewIp();
+        else:
+            listIP = lst[0].split(".")
+            del listIP[-1]
+            listIP.append(newIP);
+            break;
+
+    IP = str(listIP[0]) + "." + str(listIP[1]) + "." + str(listIP[2]) + "." + str(listIP[3])
+    return IP;
+
+
+def GetNewIp():
+    newIP = random.randint(3, 240);
+    return newIP;
 
 
 
